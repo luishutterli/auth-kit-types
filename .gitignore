@@ -135,6 +135,7 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+package-lock.json
 
 # MySQL Workbench bakup files
 *.mwb.bak
