@@ -2,12 +2,14 @@ import type { User } from "./auth";
 
 export interface AuthKitConfig {
 	baseUrl: string;
+  port?: number; // default: 6575
 	name: string;
 	jwtConfig: JWTConfig;
 	passwordPolicy?: PasswordPolicy;
-	passwordHashAlgorithm: "SHA-512";
-	passwordSaltLength: number;
-	enforceVerifiedEmail?: boolean;
+	passwordHashAlgorithm: "SHA512";
+	passwordSaltLength: 32; // 32 bytes = 256 bits, 64 hex characters
+	enforceVerifiedEmail?: boolean; // default: true
+  emailEnumerationProtection?: boolean; // default: true 
 	databaseConfig: DatabaseConfig;
 	autoCreateSchema: boolean;
 	oauthProviders?: OAuthProvider[];
@@ -70,4 +72,5 @@ export interface PasswordPolicy {
 	requireUppercase: boolean;
 	requireLowercase: boolean;
 	requireNumbers: boolean;
+  requireSpecialCharacters: boolean;
 }
