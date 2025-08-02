@@ -22,7 +22,7 @@ export interface AuthKitConfig {
 
 export interface TOTPConfig {
 	issuer?: string; // If not provided, defaults to the AuthKitConfig name
-	algorithm: "HMAC-SHA-256";
+	algorithm: "HS256";
 	digits: number;
 	period: number;
 	secretLength: number;
