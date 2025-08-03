@@ -6,7 +6,7 @@ export interface AuthKitConfig {
 	name: string;
 	jwtConfig: JWTConfig;
 	passwordPolicy?: PasswordPolicy;
-	passwordHashAlgorithm: "SHA512";
+	passwordHashAlgorithm: "SHA-512";
 	passwordSaltLength: 32; // 32 bytes = 256 bits, 64 hex characters
 	enforceVerifiedEmail?: boolean; // default: true
   emailEnumerationProtection?: boolean; // default: true 
@@ -44,7 +44,7 @@ export interface JWTConfig {
 	issuer?: string; // If not provided, defaults to the AuthKitConfig name
 	secret: string;
 	expiresIn: string;
-	algorithm: "HMAC-SHA-256";
+	algorithm: "HS256";
 	jwtStorageLocation: "cookie";
 	cookieName?: string;
 	cookieOptions?: {
@@ -58,7 +58,7 @@ export interface JWTConfig {
 }
 
 export interface DatabaseConfig {
-	type: "postgres";
+	type: "mysql" | "postgres";
 	url: string;
 	port?: number;
 	username: string;
