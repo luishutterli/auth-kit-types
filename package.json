@@ -1,16 +1,23 @@
 {
   "name": "@luishutterli/auth-kit-types",
   "description": "Shared TypeScript types for @luishutterli/auth-kit",
-  "version": "1.0.0",
-  "main": "dist/index.d.ts",
+  "version": "1.0.1",
+  "main": "dist/index.ts",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "prepublishOnly": "bun run build"
+    "prepublishOnly": "bun run build",
+    "pub": "bun publish --access public"
   },
   "devDependencies": {
     "@types/bun": "latest"
