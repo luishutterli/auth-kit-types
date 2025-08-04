@@ -28,15 +28,26 @@ export interface JWTPayload {
     alg?: string; // algorithm
     kid?: string; // key id
     // -- custom claims
-    user: User;
+    user?: User; // not present in refresh tokens
+    type?: "access" | "refresh"; // token type
     requires2FA?: boolean;
     ver?: number; // version, used for invalidation
+}
+
+export interface RefreshTokenPayload {
+    iss: string;
+    sub: number;
+    exp: number;
+    iat: number;
+    type: "refresh";
+    ver?: number;
 }
 
 export interface AuthResult {
     accessToken: string;
     refreshToken?: string;
     expiresIn: number;
+    refreshExpiresIn?: number;
     user: User;
     requires2FA?: boolean;
 }

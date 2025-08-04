@@ -44,10 +44,20 @@ export interface JWTConfig {
 	issuer?: string; // If not provided, defaults to the AuthKitConfig name
 	secret: string;
 	expiresIn: string;
+	refreshExpiresIn?: string; // default: "7d"
 	algorithm: "HS256";
 	jwtStorageLocation: "cookie";
 	cookieName?: string;
+	refreshCookieName?: string; // default: "authkit_refresh"
 	cookieOptions?: {
+		httpOnly: boolean;
+		secure: boolean;
+		sameSite: "Strict" | "Lax" | "None";
+		maxAge: number;
+		path?: string;
+		domain?: string;
+	};
+	refreshCookieOptions?: {
 		httpOnly: boolean;
 		secure: boolean;
 		sameSite: "Strict" | "Lax" | "None";
