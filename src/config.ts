@@ -1,7 +1,7 @@
 import type { User } from "./auth";
 
 export interface AuthKitConfig {
-	baseUrl: string;
+	baseUrl?: string; // default: "/"
   port?: number; // default: 6575
 	name: string;
 	jwtConfig: JWTConfig;
