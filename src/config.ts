@@ -2,12 +2,14 @@ import type { User } from "./auth";
 
 export interface AuthKitConfig {
 	baseUrl: string;
+  port?: number; // default: 6575
 	name: string;
 	jwtConfig: JWTConfig;
 	passwordPolicy?: PasswordPolicy;
 	passwordHashAlgorithm: "SHA-512";
-	passwordSaltLength: number;
-	enforceVerifiedEmail?: boolean;
+	passwordSaltLength: 32; // 32 bytes = 256 bits, 64 hex characters
+	enforceVerifiedEmail?: boolean; // default: true
+  emailEnumerationProtection?: boolean; // default: true 
 	databaseConfig: DatabaseConfig;
 	autoCreateSchema: boolean;
 	oauthProviders?: OAuthProvider[];
@@ -20,7 +22,7 @@ export interface AuthKitConfig {
 
 export interface TOTPConfig {
 	issuer?: string; // If not provided, defaults to the AuthKitConfig name
-	algorithm: "HMAC-SHA-256";
+	algorithm: "HS256";
 	digits: number;
 	period: number;
 	secretLength: number;
@@ -42,10 +44,20 @@ export interface JWTConfig {
 	issuer?: string; // If not provided, defaults to the AuthKitConfig name
 	secret: string;
 	expiresIn: string;
-	algorithm: "HMAC-SHA-256";
+	refreshExpiresIn?: string; // default: "7d"
+	algorithm: "HS256";
 	jwtStorageLocation: "cookie";
 	cookieName?: string;
+	refreshCookieName?: string; // default: "authkit_refresh"
 	cookieOptions?: {
+		httpOnly: boolean;
+		secure: boolean;
+		sameSite: "Strict" | "Lax" | "None";
+		maxAge: number;
+		path?: string;
+		domain?: string;
+	};
+	refreshCookieOptions?: {
 		httpOnly: boolean;
 		secure: boolean;
 		sameSite: "Strict" | "Lax" | "None";
@@ -56,7 +68,7 @@ export interface JWTConfig {
 }
 
 export interface DatabaseConfig {
-	type: "postgres";
+	type: "mysql" | "postgres";
 	url: string;
 	port?: number;
 	username: string;
@@ -70,4 +82,5 @@ export interface PasswordPolicy {
 	requireUppercase: boolean;
 	requireLowercase: boolean;
 	requireNumbers: boolean;
+  requireSpecialCharacters: boolean;
 }
